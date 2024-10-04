@@ -1,0 +1,685 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Security </title><style>
+    /* cspell:disable-file */
+    /* webkit printing magic: print all background colors */
+    html {
+        -webkit-print-color-adjust: exact;
+    }
+    * {
+        box-sizing: border-box;
+        -webkit-print-color-adjust: exact;
+    }
+    
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    @media only screen {
+        body {
+            margin: 2em auto;
+            max-width: 900px;
+            color: rgb(55, 53, 47);
+        }
+    }
+    
+    body {
+        line-height: 1.5;
+        white-space: pre-wrap;
+    }
+    
+    a,
+    a.visited {
+        color: inherit;
+        text-decoration: underline;
+    }
+    
+    .pdf-relative-link-path {
+        font-size: 80%;
+        color: #444;
+    }
+    
+    h1,
+    h2,
+    h3 {
+        letter-spacing: -0.01em;
+        line-height: 1.2;
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 0.75em;
+    }
+    
+    h1 {
+        font-size: 1.875rem;
+        margin-top: 1.875rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+        margin-top: 1.25rem;
+    }
+    
+    .source {
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 1.5em;
+        word-break: break-all;
+    }
+    
+    .callout {
+        border-radius: 3px;
+        padding: 1rem;
+    }
+    
+    figure {
+        margin: 1.25em 0;
+        page-break-inside: avoid;
+    }
+    
+    figcaption {
+        opacity: 0.5;
+        font-size: 85%;
+        margin-top: 0.5em;
+    }
+    
+    mark {
+        background-color: transparent;
+    }
+    
+    .indented {
+        padding-left: 1.5em;
+    }
+    
+    hr {
+        background: transparent;
+        display: block;
+        width: 100%;
+        height: 1px;
+        visibility: visible;
+        border: none;
+        border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+    }
+    
+    img {
+        max-width: 100%;
+    }
+    
+    @media only print {
+        img {
+            max-height: 100vh;
+            object-fit: contain;
+        }
+    }
+    
+    @page {
+        margin: 1in;
+    }
+    
+    .collection-content {
+        font-size: 0.875rem;
+    }
+    
+    .column-list {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .column {
+        padding: 0 1em;
+    }
+    
+    .column:first-child {
+        padding-left: 0;
+    }
+    
+    .column:last-child {
+        padding-right: 0;
+    }
+    
+    .table_of_contents-item {
+        display: block;
+        font-size: 0.875rem;
+        line-height: 1.3;
+        padding: 0.125rem;
+    }
+    
+    .table_of_contents-indent-1 {
+        margin-left: 1.5rem;
+    }
+    
+    .table_of_contents-indent-2 {
+        margin-left: 3rem;
+    }
+    
+    .table_of_contents-indent-3 {
+        margin-left: 4.5rem;
+    }
+    
+    .table_of_contents-link {
+        text-decoration: none;
+        opacity: 0.7;
+        border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+    }
+    
+    table,
+    th,
+    td {
+        border: 1px solid rgba(55, 53, 47, 0.09);
+        border-collapse: collapse;
+    }
+    
+    table {
+        border-left: none;
+        border-right: none;
+    }
+    
+    th,
+    td {
+        font-weight: normal;
+        padding: 0.25em 0.5em;
+        line-height: 1.5;
+        min-height: 1.5em;
+        text-align: left;
+    }
+    
+    th {
+        color: rgba(55, 53, 47, 0.6);
+    }
+    
+    ol,
+    ul {
+        margin: 0;
+        margin-block-start: 0.6em;
+        margin-block-end: 0.6em;
+    }
+    
+    li > ol:first-child,
+    li > ul:first-child {
+        margin-block-start: 0.6em;
+    }
+    
+    ul > li {
+        list-style: disc;
+    }
+    
+    ul.to-do-list {
+        padding-inline-start: 0;
+    }
+    
+    ul.to-do-list > li {
+        list-style: none;
+    }
+    
+    .to-do-children-checked {
+        text-decoration: line-through;
+        opacity: 0.375;
+    }
+    
+    ul.toggle > li {
+        list-style: none;
+    }
+    
+    ul {
+        padding-inline-start: 1.7em;
+    }
+    
+    ul > li {
+        padding-left: 0.1em;
+    }
+    
+    ol {
+        padding-inline-start: 1.6em;
+    }
+    
+    ol > li {
+        padding-left: 0.2em;
+    }
+    
+    .mono ol {
+        padding-inline-start: 2em;
+    }
+    
+    .mono ol > li {
+        text-indent: -0.4em;
+    }
+    
+    .toggle {
+        padding-inline-start: 0em;
+        list-style-type: none;
+    }
+    
+    /* Indent toggle children */
+    .toggle > li > details {
+        padding-left: 1.7em;
+    }
+    
+    .toggle > li > details > summary {
+        margin-left: -1.1em;
+    }
+    
+    .selected-value {
+        display: inline-block;
+        padding: 0 0.5em;
+        background: rgba(206, 205, 202, 0.5);
+        border-radius: 3px;
+        margin-right: 0.5em;
+        margin-top: 0.3em;
+        margin-bottom: 0.3em;
+        white-space: nowrap;
+    }
+    
+    .collection-title {
+        display: inline-block;
+        margin-right: 1em;
+    }
+    
+    .page-description {
+        margin-bottom: 2em;
+    }
+    
+    .simple-table {
+        margin-top: 1em;
+        font-size: 0.875rem;
+        empty-cells: show;
+    }
+    .simple-table td {
+        height: 29px;
+        min-width: 120px;
+    }
+    
+    .simple-table th {
+        height: 29px;
+        min-width: 120px;
+    }
+    
+    .simple-table-header-color {
+        background: rgb(247, 246, 243);
+        color: black;
+    }
+    .simple-table-header {
+        font-weight: 500;
+    }
+    
+    time {
+        opacity: 0.5;
+    }
+    
+    .icon {
+        display: inline-block;
+        max-width: 1.2em;
+        max-height: 1.2em;
+        text-decoration: none;
+        vertical-align: text-bottom;
+        margin-right: 0.5em;
+    }
+    
+    img.icon {
+        border-radius: 3px;
+    }
+    
+    .user-icon {
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 100%;
+        margin-right: 0.5rem;
+    }
+    
+    .user-icon-inner {
+        font-size: 0.8em;
+    }
+    
+    .text-icon {
+        border: 1px solid #000;
+        text-align: center;
+    }
+    
+    .page-cover-image {
+        display: block;
+        object-fit: cover;
+        width: 100%;
+        max-height: 30vh;
+    }
+    
+    .page-header-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .page-header-icon-with-cover {
+        margin-top: -0.72em;
+        margin-left: 0.07em;
+    }
+    
+    .page-header-icon img {
+        border-radius: 3px;
+    }
+    
+    .link-to-page {
+        margin: 1em 0;
+        padding: 0;
+        border: none;
+        font-weight: 500;
+    }
+    
+    p > .user {
+        opacity: 0.5;
+    }
+    
+    td > .user,
+    td > time {
+        white-space: nowrap;
+    }
+    
+    input[type="checkbox"] {
+        transform: scale(1.5);
+        margin-right: 0.6em;
+        vertical-align: middle;
+    }
+    
+    p {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+    
+    .image {
+        border: none;
+        margin: 1.5em 0;
+        padding: 0;
+        border-radius: 0;
+        text-align: center;
+    }
+    
+    .code,
+    code {
+        background: rgba(135, 131, 120, 0.15);
+        border-radius: 3px;
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 85%;
+        tab-size: 2;
+    }
+    
+    code {
+        color: #eb5757;
+    }
+    
+    .code {
+        padding: 1.5em 1em;
+    }
+    
+    .code-wrap {
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    
+    .code > code {
+        background: none;
+        padding: 0;
+        font-size: 100%;
+        color: inherit;
+    }
+    
+    blockquote {
+        font-size: 1.25em;
+        margin: 1em 0;
+        padding-left: 1em;
+        border-left: 3px solid rgb(55, 53, 47);
+    }
+    
+    .bookmark {
+        text-decoration: none;
+        max-height: 8em;
+        padding: 0;
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+    }
+    
+    .bookmark-title {
+        font-size: 0.85em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 1.75em;
+        white-space: nowrap;
+    }
+    
+    .bookmark-text {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .bookmark-info {
+        flex: 4 1 180px;
+        padding: 12px 14px 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .bookmark-image {
+        width: 33%;
+        flex: 1 1 180px;
+        display: block;
+        position: relative;
+        object-fit: cover;
+        border-radius: 1px;
+    }
+    
+    .bookmark-description {
+        color: rgba(55, 53, 47, 0.6);
+        font-size: 0.75em;
+        overflow: hidden;
+        max-height: 4.5em;
+        word-break: break-word;
+    }
+    
+    .bookmark-href {
+        font-size: 0.75em;
+        margin-top: 0.25em;
+    }
+    
+    .sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+    .code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+    .serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+    .mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+    .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+    .pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+    .pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+    .pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+    .pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+    .pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+    .pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+    .pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+    .pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+    .pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+    .pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+    .pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+    .pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+    .pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+    .pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+    .pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+    .highlight-default {
+        color: rgba(55, 53, 47, 1);
+    }
+    .highlight-gray {
+        color: rgba(120, 119, 116, 1);
+        fill: rgba(120, 119, 116, 1);
+    }
+    .highlight-brown {
+        color: rgba(159, 107, 83, 1);
+        fill: rgba(159, 107, 83, 1);
+    }
+    .highlight-orange {
+        color: rgba(217, 115, 13, 1);
+        fill: rgba(217, 115, 13, 1);
+    }
+    .highlight-yellow {
+        color: rgba(203, 145, 47, 1);
+        fill: rgba(203, 145, 47, 1);
+    }
+    .highlight-teal {
+        color: rgba(68, 131, 97, 1);
+        fill: rgba(68, 131, 97, 1);
+    }
+    .highlight-blue {
+        color: rgba(51, 126, 169, 1);
+        fill: rgba(51, 126, 169, 1);
+    }
+    .highlight-purple {
+        color: rgba(144, 101, 176, 1);
+        fill: rgba(144, 101, 176, 1);
+    }
+    .highlight-pink {
+        color: rgba(193, 76, 138, 1);
+        fill: rgba(193, 76, 138, 1);
+    }
+    .highlight-red {
+        color: rgba(212, 76, 71, 1);
+        fill: rgba(212, 76, 71, 1);
+    }
+    .highlight-default_background {
+        color: rgba(55, 53, 47, 1);
+    }
+    .highlight-gray_background {
+        background: rgba(241, 241, 239, 1);
+    }
+    .highlight-brown_background {
+        background: rgba(244, 238, 238, 1);
+    }
+    .highlight-orange_background {
+        background: rgba(251, 236, 221, 1);
+    }
+    .highlight-yellow_background {
+        background: rgba(251, 237, 214, 1);
+    }
+    .highlight-teal_background {
+        background: rgba(237, 243, 236, 1);
+    }
+    .highlight-blue_background {
+        background: rgba(231, 243, 248, 1);
+    }
+    .highlight-purple_background {
+        background: rgba(244, 240, 247, 0.8);
+    }
+    .highlight-pink_background {
+        background: rgba(249, 238, 243, 0.8);
+    }
+    .highlight-red_background {
+        background: rgba(253, 235, 236, 1);
+    }
+    .block-color-default {
+        color: inherit;
+        fill: inherit;
+    }
+    .block-color-gray {
+        color: rgba(120, 119, 116, 1);
+        fill: rgba(120, 119, 116, 1);
+    }
+    .block-color-brown {
+        color: rgba(159, 107, 83, 1);
+        fill: rgba(159, 107, 83, 1);
+    }
+    .block-color-orange {
+        color: rgba(217, 115, 13, 1);
+        fill: rgba(217, 115, 13, 1);
+    }
+    .block-color-yellow {
+        color: rgba(203, 145, 47, 1);
+        fill: rgba(203, 145, 47, 1);
+    }
+    .block-color-teal {
+        color: rgba(68, 131, 97, 1);
+        fill: rgba(68, 131, 97, 1);
+    }
+    .block-color-blue {
+        color: rgba(51, 126, 169, 1);
+        fill: rgba(51, 126, 169, 1);
+    }
+    .block-color-purple {
+        color: rgba(144, 101, 176, 1);
+        fill: rgba(144, 101, 176, 1);
+    }
+    .block-color-pink {
+        color: rgba(193, 76, 138, 1);
+        fill: rgba(193, 76, 138, 1);
+    }
+    .block-color-red {
+        color: rgba(212, 76, 71, 1);
+        fill: rgba(212, 76, 71, 1);
+    }
+    .block-color-default_background {
+        color: inherit;
+        fill: inherit;
+    }
+    .block-color-gray_background {
+        background: rgba(241, 241, 239, 1);
+    }
+    .block-color-brown_background {
+        background: rgba(244, 238, 238, 1);
+    }
+    .block-color-orange_background {
+        background: rgba(251, 236, 221, 1);
+    }
+    .block-color-yellow_background {
+        background: rgba(251, 237, 214, 1);
+    }
+    .block-color-teal_background {
+        background: rgba(237, 243, 236, 1);
+    }
+    .block-color-blue_background {
+        background: rgba(231, 243, 248, 1);
+    }
+    .block-color-purple_background {
+        background: rgba(244, 240, 247, 0.8);
+    }
+    .block-color-pink_background {
+        background: rgba(249, 238, 243, 0.8);
+    }
+    .block-color-red_background {
+        background: rgba(253, 235, 236, 1);
+    }
+    .select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+    .select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+    .select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+    .select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+    .select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+    .select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+    .select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+    .select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+    .select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+    .select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+    .select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+    .select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+    .select-value-color-pageGlass { background-color: undefined; }
+    .select-value-color-washGlass { background-color: undefined; }
+    
+    .checkbox {
+        display: inline-flex;
+        vertical-align: text-bottom;
+        width: 16;
+        height: 16;
+        background-size: 16px;
+        margin-left: 2px;
+        margin-right: 5px;
+    }
+    
+    .checkbox-on {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+    }
+    
+    .checkbox-off {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+    }
+        
+    </style></head><body><article id="11519209-e9d4-802a-8f43-e9668f7077a3" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔐</span></div><h1 class="page-title">Security </h1><p class="page-description"></p></header><div class="page-body"><h3 id="11519209-e9d4-8087-8704-f31c65a74ed3" class="">1. <strong>Computer Networking &amp; Linux Administration Fundamentals</strong></h3><h3 id="11519209-e9d4-804f-a36b-c5f22c4cecfe" class=""><em>Kiến thức về Mạng máy tính:</em></h3><ul id="11519209-e9d4-8005-97c9-f556b5cf985b" class="bulleted-list"><li style="list-style-type:disc"><strong>Mô hình OSI (Open Systems Interconnection)</strong>: 7 tầng (Physical, Data Link, Network, Transport, Session, Presentation, Application).</li></ul><ul id="11519209-e9d4-80f7-b2ee-dd0ef7d030fe" class="bulleted-list"><li style="list-style-type:disc"><strong>Giao thức TCP/IP</strong>: Các lớp mạng cơ bản (Application, Transport, Internet, Network Access).</li></ul><ul id="11519209-e9d4-80a5-ae6f-c85f31ff93fb" class="bulleted-list"><li style="list-style-type:disc"><strong>LAN/WAN</strong>: Mạng nội bộ (LAN) và mạng diện rộng (WAN).</li></ul><ul id="11519209-e9d4-809f-807e-dfc74085ad65" class="bulleted-list"><li style="list-style-type:disc"><strong>Switching &amp; Routing</strong>: Cách chuyển mạch và định tuyến hoạt động.</li></ul><ul id="11519209-e9d4-8085-ad64-dcbf8844ad79" class="bulleted-list"><li style="list-style-type:disc"><strong>IP Addressing</strong>: Địa chỉ IPv4, IPv6, subnetting.</li></ul><ul id="11519209-e9d4-80f6-8e92-f1c6e7334ed4" class="bulleted-list"><li style="list-style-type:disc"><strong>NAT, DHCP, DNS</strong>: Các giao thức phân phối địa chỉ IP và tên miền.</li></ul><ul id="11519209-e9d4-801d-9e28-fa638e6273eb" class="bulleted-list"><li style="list-style-type:disc"><strong>Network Devices</strong>: Router, Switch, Hub, Firewall.</li></ul><ul id="11519209-e9d4-80cf-b6ee-f9e851b5c4f4" class="bulleted-list"><li style="list-style-type:disc"><strong>Wireless Networking</strong>: Wi-Fi, chuẩn IEEE 802.11.</li></ul><ul id="11519209-e9d4-809c-b2d9-c6680bf33843" class="bulleted-list"><li style="list-style-type:disc"><strong>Firewalls, VPNs</strong>: An ninh mạng và kết nối từ xa an toàn.</li></ul><h3 id="11519209-e9d4-80bc-b205-d10944fd2540" class=""><em>Kiến thức về Quản trị Linux:</em></h3><ul id="11519209-e9d4-8098-bc11-c29fb3869da6" class="bulleted-list"><li style="list-style-type:disc"><strong>Linux Shell</strong>: Bash scripting, command line interface (CLI).</li></ul><ul id="11519209-e9d4-8011-b367-def903de3bf3" class="bulleted-list"><li style="list-style-type:disc"><strong>File Systems</strong>: ext4, NTFS, FAT32, phân quyền file và thư mục.</li></ul><ul id="11519209-e9d4-80c9-a8db-fadc99bdd948" class="bulleted-list"><li style="list-style-type:disc"><strong>User &amp; Group Management</strong>: Quản lý người dùng và quyền hạn.</li></ul><ul id="11519209-e9d4-8029-a772-e284e0ca2452" class="bulleted-list"><li style="list-style-type:disc"><strong>Process Management</strong>: Chạy, dừng, và kiểm tra các tiến trình.</li></ul><ul id="11519209-e9d4-80e9-a180-e85c73649813" class="bulleted-list"><li style="list-style-type:disc"><strong>Networking Tools</strong>: ifconfig, netstat, ping, traceroute.</li></ul><ul id="11519209-e9d4-804d-ab61-d2c7fc97f10d" class="bulleted-list"><li style="list-style-type:disc"><strong>Package Management</strong>: apt, yum, dnf.</li></ul><ul id="11519209-e9d4-80b5-929b-cc8c30d0820b" class="bulleted-list"><li style="list-style-type:disc"><strong>Services &amp; Daemons</strong>: Quản lý các dịch vụ chạy nền, như Apache, MySQL.</li></ul><ul id="11519209-e9d4-8084-9401-ff6119513836" class="bulleted-list"><li style="list-style-type:disc"><strong>System Monitoring</strong>: Kiểm tra hiệu suất hệ thống bằng top, htop, iostat.</li></ul><hr id="11519209-e9d4-8034-b12d-d030f5e490c0"><h3 id="11519209-e9d4-8043-b3e1-e45c6a7a5913" class="">2. <strong>CyberSecurity Fundamentals</strong></h3><ul id="11519209-e9d4-8058-9eb8-e13373fa24f1" class="bulleted-list"><li style="list-style-type:disc"><strong>CIA Triad</strong>: Confidentiality (Bảo mật thông tin), Integrity (Toàn vẹn dữ liệu), Availability (Khả dụng).</li></ul><ul id="11519209-e9d4-8031-b4cf-c098b9b30ac4" class="bulleted-list"><li style="list-style-type:disc"><strong>Types of Attacks</strong>: DoS, DDoS, Man-in-the-Middle, SQL Injection, Phishing.</li></ul><ul id="11519209-e9d4-80aa-83a8-d030889832df" class="bulleted-list"><li style="list-style-type:disc"><strong>Cryptography</strong>: Mã hóa dữ liệu bằng các thuật toán như AES, RSA, SHA-256.</li></ul><ul id="11519209-e9d4-8076-a77a-dec5835a29df" class="bulleted-list"><li style="list-style-type:disc"><strong>Vulnerability Management</strong>: Phát hiện và khắc phục lỗ hổng bảo mật.</li></ul><ul id="11519209-e9d4-8016-abe8-e8a2d4b8f9bb" class="bulleted-list"><li style="list-style-type:disc"><strong>Security Policies</strong>: Các chính sách bảo mật như BYOD, Acceptable Use Policy (AUP).</li></ul><ul id="11519209-e9d4-80a7-839d-c3e8f6a3cf00" class="bulleted-list"><li style="list-style-type:disc"><strong>Incident Response</strong>: Quản lý sự cố bảo mật, bao gồm phát hiện và khắc phục.</li></ul><ul id="11519209-e9d4-80fd-a676-eea0230b31f7" class="bulleted-list"><li style="list-style-type:disc"><strong>Network Security</strong>: Firewall, Intrusion Detection System (IDS), Intrusion Prevention System (IPS).</li></ul><ul id="11519209-e9d4-8029-ad06-ef4e5cb65d15" class="bulleted-list"><li style="list-style-type:disc"><strong>Endpoint Security</strong>: Bảo vệ máy tính cá nhân bằng phần mềm chống virus, phần mềm chống malware.</li></ul><hr id="11519209-e9d4-8011-8102-c874bd5abbb5"><h3 id="11519209-e9d4-80b2-977a-e9ed66902d68" class="">3. <strong>Certified Ethical Hacker v10 (CEH v10)</strong></h3><ul id="11519209-e9d4-8055-8f5e-d001be32e987" class="bulleted-list"><li style="list-style-type:disc"><strong>Reconnaissance</strong>: Thu thập thông tin (Footprinting), các kỹ thuật như Google Hacking, Whois Lookup, DNS Enumeration.</li></ul><ul id="11519209-e9d4-80c0-a98d-d6763f665dba" class="bulleted-list"><li style="list-style-type:disc"><strong>Scanning &amp; Enumeration</strong>: Quét mạng (Network Scanning), sử dụng Nmap, Wireshark.</li></ul><ul id="11519209-e9d4-8003-bb21-c5bacbd1c463" class="bulleted-list"><li style="list-style-type:disc"><strong>Vulnerability Analysis</strong>: Phân tích và phát hiện các lỗ hổng bảo mật.</li></ul><ul id="11519209-e9d4-808d-9f9a-fe838eb9e236" class="bulleted-list"><li style="list-style-type:disc"><strong>Exploitation</strong>: Sử dụng các công cụ khai thác như Metasploit.</li></ul><ul id="11519209-e9d4-80ad-9c67-f2351c2482fd" class="bulleted-list"><li style="list-style-type:disc"><strong>Social Engineering</strong>: Tấn công bằng cách lừa đảo thông qua con người.</li></ul><ul id="11519209-e9d4-80cb-8807-d50d31cc8882" class="bulleted-list"><li style="list-style-type:disc"><strong>Password Attacks</strong>: Các phương pháp tấn công mật khẩu như brute-force, dictionary attacks.</li></ul><ul id="11519209-e9d4-8057-8147-fa7403022a60" class="bulleted-list"><li style="list-style-type:disc"><strong>Malware</strong>: Virus, trojans, worms, rootkits.</li></ul><ul id="11519209-e9d4-80dd-b4ef-d56122ee4461" class="bulleted-list"><li style="list-style-type:disc"><strong>Web App Security</strong>: XSS, SQL Injection, Command Injection.</li></ul><ul id="11519209-e9d4-80e9-b0b9-ee0e7283b3a9" class="bulleted-list"><li style="list-style-type:disc"><strong>Wireless Network Security</strong>: WEP, WPA/WPA2, tấn công wireless.</li></ul><hr id="11519209-e9d4-8069-8ded-e4ace97fa2da"><h3 id="11519209-e9d4-8017-92dd-f64d0974443a" class="">4. <strong>Basic Penetration Testing - ECSA Certified Secure Analyst (v10)</strong></h3><ul id="11519209-e9d4-80cc-8945-db12f34ed962" class="bulleted-list"><li style="list-style-type:disc"><strong>Penetration Testing Phases</strong>: Thu thập thông tin, phân tích lỗ hổng, khai thác, và viết báo cáo.</li></ul><ul id="11519209-e9d4-80c0-9253-c82f4ca2a9c3" class="bulleted-list"><li style="list-style-type:disc"><strong>Tools</strong>: Burp Suite, OWASP ZAP, Nmap, Wireshark, Metasploit.</li></ul><ul id="11519209-e9d4-80f9-bd66-e98be8268db6" class="bulleted-list"><li style="list-style-type:disc"><strong>Web Application Penetration Testing</strong>: XSS, SQL Injection, CSRF, IDOR (Insecure Direct Object References).</li></ul><ul id="11519209-e9d4-8087-ab58-f42a5e64cc67" class="bulleted-list"><li style="list-style-type:disc"><strong>Network Penetration Testing</strong>: Tấn công vào mạng nội bộ và thiết bị.</li></ul><ul id="11519209-e9d4-8024-b4b4-ce01aec1d9f5" class="bulleted-list"><li style="list-style-type:disc"><strong>Social Engineering</strong>: Tấn công thông qua email phishing, các chiến thuật lừa đảo.</li></ul><ul id="11519209-e9d4-80c3-9ecc-d40c82a9ec7c" class="bulleted-list"><li style="list-style-type:disc"><strong>Post Exploitation</strong>: Xóa dấu vết, tăng quyền admin, thiết lập backdoor.</li></ul><hr id="11519209-e9d4-80fd-9aa4-f2991c99b331"><h3 id="11519209-e9d4-80f3-8c57-ea33487faf63" class="">5. <strong>Advanced Web Application Penetration Testing</strong></h3><ul id="11519209-e9d4-80cd-b14a-f2f30483e845" class="bulleted-list"><li style="list-style-type:disc"><strong>OWASP Top 10</strong>: Tìm hiểu về các lỗ hổng phổ biến trong ứng dụng web như XSS, SQL Injection, Insecure Deserialization.</li></ul><ul id="11519209-e9d4-8031-819a-ec36d1533d81" class="bulleted-list"><li style="list-style-type:disc"><strong>Advanced SQL Injection</strong>: Bypass authentication, union attacks, blind SQL Injection.</li></ul><ul id="11519209-e9d4-80f1-8160-d8b6eaa5d65b" class="bulleted-list"><li style="list-style-type:disc"><strong>Cross-Site Scripting (XSS)</strong>: Reflected, Stored, DOM-based XSS.</li></ul><ul id="11519209-e9d4-80a6-86ae-ca1d7f4ab210" class="bulleted-list"><li style="list-style-type:disc"><strong>Cross-Site Request Forgery (CSRF)</strong>: Cách thực hiện và bảo vệ khỏi CSRF.</li></ul><ul id="11519209-e9d4-8055-b148-ca8fa79d2eb1" class="bulleted-list"><li style="list-style-type:disc"><strong>Security Misconfiguration</strong>: Lỗi cấu hình bảo mật và các cách tấn công.</li></ul><ul id="11519209-e9d4-8016-a0d6-dd7d1cc53af3" class="bulleted-list"><li style="list-style-type:disc"><strong>File Upload Vulnerabilities</strong>: Tấn công thông qua chức năng tải file lên.</li></ul><ul id="11519209-e9d4-80c2-9530-e98de59c0fcf" class="bulleted-list"><li style="list-style-type:disc"><strong>Session Management Attacks</strong>: Tấn công session hijacking và session fixation.</li></ul><ul id="11519209-e9d4-80b8-91a0-f1395331360d" class="bulleted-list"><li style="list-style-type:disc"><strong>Burp Suite Pro</strong>: Sử dụng các tính năng nâng cao như Intruder, Repeater, và Scanner.</li></ul><hr id="11519209-e9d4-80ea-bfbd-fd4a12bba94e"><h3 id="11519209-e9d4-8054-b708-c3c99888c2d3" class="">6. <strong>Computer Hacking Forensic Investigator (CHFI v9)</strong></h3><ul id="11519209-e9d4-805c-8bc7-e81f4983a1cd" class="bulleted-list"><li style="list-style-type:disc"><strong>Digital Forensics</strong>: Quá trình điều tra các vụ việc tội phạm mạng.</li></ul><ul id="11519209-e9d4-806d-9779-fa7d0a87feb2" class="bulleted-list"><li style="list-style-type:disc"><strong>Forensic Process</strong>: Xác định, bảo tồn, phân tích và báo cáo bằng chứng kỹ thuật số.</li></ul><ul id="11519209-e9d4-80f3-8c9c-e9175457827f" class="bulleted-list"><li style="list-style-type:disc"><strong>Data Acquisition</strong>: Thu thập dữ liệu từ ổ cứng, thiết bị di động và mạng.</li></ul><ul id="11519209-e9d4-8024-bbb5-ca0684709322" class="bulleted-list"><li style="list-style-type:disc"><strong>File Systems Forensics</strong>: Kiểm tra các hệ thống file, phân tích các file ẩn, xóa.</li></ul><ul id="11519209-e9d4-80ea-96f9-db2afdbdda87" class="bulleted-list"><li style="list-style-type:disc"><strong>Memory Forensics</strong>: Điều tra dữ liệu trong bộ nhớ RAM.</li></ul><ul id="11519209-e9d4-80d3-9ac8-de2bc0a3c520" class="bulleted-list"><li style="list-style-type:disc"><strong>Network Forensics</strong>: Phân tích lưu lượng mạng để phát hiện tấn công và vi phạm.</li></ul><ul id="11519209-e9d4-8051-a372-fa6d73fb163e" class="bulleted-list"><li style="list-style-type:disc"><strong>Log Analysis</strong>: Phân tích các file log của hệ thống và ứng dụng.</li></ul><ul id="11519209-e9d4-8039-8189-e2c9a6782eec" class="bulleted-list"><li style="list-style-type:disc"><strong>Anti-forensics</strong>: Các kỹ thuật tấn công viên dùng để xóa dấu vết và cách phát hiện.</li></ul><h3 id="11519209-e9d4-8005-adce-ddde58d1946e" class=""><strong>Phân Tích Mã Độc Căn Bản (Basic Malware Analysis)</strong></h3><p id="11519209-e9d4-8068-aadd-edf322571b6b" class="">Phân tích mã độc căn bản là quá trình hiểu và khám phá cách mã độc hoạt động mà không cần phải có những kỹ năng hay công cụ quá phức tạp.</p><h3 id="11519209-e9d4-80ed-8274-df8ae4ea0127" class=""><strong>1. Phân Tích Tĩnh (Static Analysis)</strong></h3><p id="11519209-e9d4-808b-a1a6-fbdecb44fac1" class="">Đây là bước phân tích mã độc mà không cần thực thi mã:</p><ul id="11519209-e9d4-802b-ae50-fdfa74ee8dab" class="bulleted-list"><li style="list-style-type:disc"><strong>File Identification</strong>: Kiểm tra thông tin cơ bản của file như loại file, kích thước, chữ ký.<ul id="11519209-e9d4-80a1-b926-e697e8e18aa0" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>file</code> (Linux), <code>PEiD</code>, <code>TrID</code>.</li></ul></li></ul><ul id="11519209-e9d4-8094-a8e6-d2e74c8ff9a7" class="bulleted-list"><li style="list-style-type:disc"><strong>Hashing</strong>: Tạo mã băm (hash) của mã độc để kiểm tra xem nó đã được nhận diện trước đây chưa.<ul id="11519209-e9d4-806d-bcca-d1c6e3a15ee6" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>MD5</code>, <code>SHA256</code>, VirusTotal.</li></ul></li></ul><ul id="11519209-e9d4-8081-b4f3-edcfb8c6d741" class="bulleted-list"><li style="list-style-type:disc"><strong>String Analysis</strong>: Phân tích chuỗi ký tự bên trong file để tìm các đoạn mã đáng ngờ hoặc các thông tin như URL, địa chỉ IP, mật khẩu.<ul id="11519209-e9d4-80d8-8758-e1279baca70c" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>strings</code>, <code>BinText</code>.</li></ul></li></ul><ul id="11519209-e9d4-80a8-a1e3-c887a915cf3b" class="bulleted-list"><li style="list-style-type:disc"><strong>PE Header Analysis</strong>: Kiểm tra tiêu đề của file thực thi (Portable Executable - PE) để hiểu cấu trúc và các thư viện mà mã độc có thể sử dụng.<ul id="11519209-e9d4-803b-a7ee-c4e0f76aeb24" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>PEview</code>, <code>CFF Explorer</code>.</li></ul></li></ul><ul id="11519209-e9d4-80b4-ab9a-fe99087bcb30" class="bulleted-list"><li style="list-style-type:disc"><strong>Disassembly</strong>: Dịch mã máy thành mã Assembly để kiểm tra lệnh mà mã độc sử dụng.<ul id="11519209-e9d4-8082-a0bf-d5ca24dddfc8" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>IDA Pro</code>, <code>Ghidra</code>, <code>OllyDbg</code>.</li></ul></li></ul><h3 id="11519209-e9d4-80fd-9323-e86e4c7ea53a" class=""><strong>2. Phân Tích Động (Dynamic Analysis)</strong></h3><p id="11519209-e9d4-80d6-8e11-ef0c5680549f" class="">Phân tích động là quá trình thực thi mã độc trong một môi trường kiểm soát để quan sát hành vi của nó:</p><ul id="11519209-e9d4-80e1-b342-c364c4affc5a" class="bulleted-list"><li style="list-style-type:disc"><strong>Sandbox Analysis</strong>: Chạy mã độc trong một môi trường cách ly (sandbox) để tự động ghi lại hành vi.<ul id="11519209-e9d4-8068-b032-f83f7d72f487" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Cuckoo Sandbox</code>, <code>Any.Run</code>, <code>Joe Sandbox</code>.</li></ul></li></ul><ul id="11519209-e9d4-807f-80dc-e26a783e2caf" class="bulleted-list"><li style="list-style-type:disc"><strong>Process Monitoring</strong>: Theo dõi các tiến trình mà mã độc tạo ra hoặc tương tác.<ul id="11519209-e9d4-8065-9733-f0535c944b7a" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Process Monitor</code>, <code>Process Explorer</code>.</li></ul></li></ul><ul id="11519209-e9d4-8019-a0b3-fd55bf9f92c9" class="bulleted-list"><li style="list-style-type:disc"><strong>Registry Monitoring</strong>: Kiểm tra xem mã độc có sửa đổi hoặc thêm các khóa registry không.<ul id="11519209-e9d4-809d-8eb8-d48e80e0f82c" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Regshot</code>, <code>Autoruns</code>.</li></ul></li></ul><ul id="11519209-e9d4-808c-812e-f3c5327956cd" class="bulleted-list"><li style="list-style-type:disc"><strong>Network Traffic Analysis</strong>: Quan sát các gói tin mạng mà mã độc gửi đi hoặc nhận về.<ul id="11519209-e9d4-80b3-9549-f5d9ac4d8400" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Wireshark</code>, <code>Fiddler</code>, <code>TCPView</code>.</li></ul></li></ul><ul id="11519209-e9d4-80f8-8f4b-e0ea9d6808da" class="bulleted-list"><li style="list-style-type:disc"><strong>File System Monitoring</strong>: Kiểm tra sự thay đổi của hệ thống file, xem mã độc có tạo file mới hay xóa file không.<ul id="11519209-e9d4-801c-a149-ecc4f3351595" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Process Monitor</code>, <code>Sysinternals Suite</code>.</li></ul></li></ul><hr id="11519209-e9d4-8066-beb0-e3d7b464a94a"><h3 id="11519209-e9d4-8066-9e9a-de7eb26c654c" class=""><strong>Phân Tích Mã Độc Nâng Cao (Advanced Malware Analysis)</strong></h3><p id="11519209-e9d4-8019-9a16-d8a16b5e2814" class="">Phân tích mã độc nâng cao yêu cầu kỹ năng sâu hơn trong việc dịch ngược mã (reverse engineering), phân tích lưu lượng mạng phức tạp và nghiên cứu sâu hơn về các kỹ thuật né tránh mà mã độc sử dụng.</p><h3 id="11519209-e9d4-80fb-aaa8-cb0e555bf5ca" class=""><strong>1. Kỹ Thuật Dịch Ngược (Reverse Engineering)</strong></h3><ul id="11519209-e9d4-8033-9517-e38baedbbe81" class="bulleted-list"><li style="list-style-type:disc"><strong>Decompilation</strong>: Dịch mã nhị phân (binary code) ngược lại thành mã nguồn.<ul id="11519209-e9d4-80a9-9978-cb5ddef36aaf" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Ghidra</code>, <code>IDA Pro</code>, <code>Radare2</code>.</li></ul></li></ul><ul id="11519209-e9d4-805a-b806-c87f34a198b9" class="bulleted-list"><li style="list-style-type:disc"><strong>API Call Analysis</strong>: Phân tích các lệnh API mà mã độc sử dụng để tương tác với hệ điều hành hoặc mạng.<ul id="11519209-e9d4-8078-a682-c4ae36ab0cfc" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>API Monitor</code>, <code>Sysinternals Suite</code>.</li></ul></li></ul><ul id="11519209-e9d4-80c7-8cea-fccfdf547832" class="bulleted-list"><li style="list-style-type:disc"><strong>Debugging</strong>: Sử dụng debugger để dừng và quan sát quá trình thực thi mã độc từng bước.<ul id="11519209-e9d4-80de-b96b-f4206130ee00" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>x64dbg</code>, <code>OllyDbg</code>.</li></ul></li></ul><h3 id="11519209-e9d4-80d6-92a6-d6bf227c78ff" class=""><strong>2. Phân Tích Mã Độc Ẩn Danh (Obfuscated Malware)</strong></h3><p id="11519209-e9d4-8068-8ccc-cf83fd77c464" class="">Mã độc nâng cao thường sử dụng các kỹ thuật ẩn danh để tránh bị phát hiện:</p><ul id="11519209-e9d4-808d-9c10-fd18a99e6576" class="bulleted-list"><li style="list-style-type:disc"><strong>Packing/Unpacking</strong>: Một số mã độc được "gói" để làm phức tạp quá trình phân tích. Kỹ năng unpack là cần thiết để khôi phục mã gốc.<ul id="11519209-e9d4-8020-a4f7-f230deefe860" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>UPX</code>, <code>PEiD</code>, <code>unpackme</code>.</li></ul></li></ul><ul id="11519209-e9d4-8079-b402-c8a1a08f53f2" class="bulleted-list"><li style="list-style-type:disc"><strong>Code Obfuscation</strong>: Mã độc có thể được mã hóa hoặc làm rối để làm khó quá trình đọc mã nguồn.<ul id="11519209-e9d4-800b-8817-d1b18e9a68ac" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>De4Dot</code>, <code>Uncompyle6</code> (đối với Python).</li></ul></li></ul><ul id="11519209-e9d4-806d-b5d8-d8099b67fb49" class="bulleted-list"><li style="list-style-type:disc"><strong>Anti-Debugging/Anti-VM Techniques</strong>: Mã độc có thể nhận diện môi trường debug hoặc sandbox và thay đổi hành vi.<ul id="11519209-e9d4-80e4-a050-f633683d45ca" class="bulleted-list"><li style="list-style-type:circle">Công cụ: Debug kỹ thuật với <code>x64dbg</code>, kiểm tra dấu hiệu anti-VM với <code>VMDetect</code>.</li></ul></li></ul><h3 id="11519209-e9d4-80b3-88a8-da874c88efe6" class=""><strong>3. Phân Tích Mã Độc Khai Thác Lỗ Hổng (Exploitation-based Malware)</strong></h3><ul id="11519209-e9d4-80c2-89fe-c9ede88868c8" class="bulleted-list"><li style="list-style-type:disc"><strong>Zero-day Analysis</strong>: Phân tích mã độc khai thác các lỗ hổng chưa được công bố (zero-day).<ul id="11519209-e9d4-80b9-947a-d1d6f68bc08c" class="bulleted-list"><li style="list-style-type:circle">Công cụ: Kiểm tra lỗ hổng với <code>Metasploit</code>, phân tích sâu với các kỹ thuật fuzzing.</li></ul></li></ul><ul id="11519209-e9d4-80c4-818b-fcf5370c41c5" class="bulleted-list"><li style="list-style-type:disc"><strong>Shellcode Analysis</strong>: Một số mã độc sử dụng shellcode để thực hiện các hoạt động tấn công.<ul id="11519209-e9d4-8014-b18f-fb456e52c72a" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Scdbg</code>, <code>SCTEST</code>, <code>Radare2</code>.</li></ul></li></ul><h3 id="11519209-e9d4-80ad-8cfb-e93a61c9306f" class=""><strong>4. Phân Tích Lưu Lượng Mạng (Network Forensics)</strong></h3><p id="11519209-e9d4-803a-9b92-d3bcd48ee489" class="">Phân tích mã độc liên quan đến lưu lượng mạng nâng cao:</p><ul id="11519209-e9d4-80d4-9d44-e959a9d92c58" class="bulleted-list"><li style="list-style-type:disc"><strong>Protocol Analysis</strong>: Kiểm tra các giao thức mạng mà mã độc sử dụng, như HTTP, FTP, DNS.<ul id="11519209-e9d4-8087-9222-fb6c5a491670" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Wireshark</code>, <code>NetWitness</code>.</li></ul></li></ul><ul id="11519209-e9d4-802d-99d7-c602eda4a35a" class="bulleted-list"><li style="list-style-type:disc"><strong>Encrypted Traffic</strong>: Phân tích lưu lượng mã hóa mà mã độc sử dụng, như HTTPS hoặc VPN.<ul id="11519209-e9d4-8068-90b6-cfdeeb22c341" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>SSLstrip</code>, <code>mitmproxy</code>.</li></ul></li></ul><ul id="11519209-e9d4-8074-8d57-f8f9c6b47adb" class="bulleted-list"><li style="list-style-type:disc"><strong>Command and Control (C2)</strong>: Theo dõi và phân tích hoạt động của mã độc với máy chủ điều khiển từ xa (C2).<ul id="11519209-e9d4-80c6-aeb6-d8403340b238" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Wireshark</code>, <code>Suricata</code>, <code>Snort</code>.</li></ul></li></ul><h3 id="11519209-e9d4-80cc-8af1-e1b02c5f157b" class=""><strong>5. Phân Tích Bộ Nhớ (Memory Forensics)</strong></h3><p id="11519209-e9d4-8061-9407-cc19f200aafb" class="">Phân tích bộ nhớ là cách tiếp cận nâng cao để phân tích mã độc mà không cần file:</p><ul id="11519209-e9d4-806b-b56b-c59b8a03dab1" class="bulleted-list"><li style="list-style-type:disc"><strong>Memory Dump</strong>: Lấy thông tin từ bộ nhớ của một hệ thống đang chạy để phân tích mã độc.<ul id="11519209-e9d4-80ab-8376-dadc350fbcd4" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Volatility</code>, <code>Rekall</code>.</li></ul></li></ul><ul id="11519209-e9d4-8070-a509-ec905647c2c1" class="bulleted-list"><li style="list-style-type:disc"><strong>Code Injection Analysis</strong>: Kiểm tra xem mã độc có thực hiện kỹ thuật injection để ẩn mình trong bộ nhớ của các tiến trình khác hay không.<ul id="11519209-e9d4-806a-a21c-d86ec367479d" class="bulleted-list"><li style="list-style-type:circle">Công cụ: <code>Volatility</code>, <code>ProcDump</code>.</li></ul></li></ul><hr id="11519209-e9d4-803a-9529-d9eafde83756"><h3 id="11519209-e9d4-80e6-b174-f100853111bf" class=""><strong>Sự Khác Biệt Giữa Phân Tích Căn Bản và Nâng Cao:</strong></h3><ul id="11519209-e9d4-8053-b71a-ce5670db129a" class="bulleted-list"><li style="list-style-type:disc"><strong>Phân Tích Căn Bản</strong> tập trung vào việc sử dụng các công cụ tự động để phát hiện mã độc và hiểu các hành vi cơ bản của nó. Đây là bước đầu tiên để đánh giá nguy cơ mã độc.</li></ul><ul id="11519209-e9d4-80ee-9f92-d3540d669176" class="bulleted-list"><li style="list-style-type:disc"><strong>Phân Tích Nâng Cao</strong> yêu cầu kiến thức sâu hơn về lập trình, dịch ngược mã và các kỹ thuật chuyên sâu để hiểu rõ hơn về mục tiêu và kỹ thuật của mã độc, cũng như cách thức mà nó né tránh các công cụ bảo mật.</li></ul><p id="11519209-e9d4-80ea-868c-db810cceee17" class="">
+    </p><hr id="11519209-e9d4-80d9-af77-ff8f4272e277"><h3 id="11519209-e9d4-8051-98c4-c0ab2c0aecf6" class=""><strong>Certified Cloud Security Professional (CCSP)</strong></h3><p id="11519209-e9d4-805d-9909-ea43695f466a" class=""><strong>CCSP</strong> là chứng chỉ cao cấp dành cho các chuyên gia bảo mật đám mây, tập trung vào việc hiểu và áp dụng các biện pháp bảo mật cho môi trường điện toán đám mây.</p><h3 id="11519209-e9d4-80d5-9b4b-e93147dc3953" class=""><strong>1. Cloud Concepts, Architecture and Design (Khái niệm, Kiến trúc và Thiết kế đám mây)</strong></h3><ul id="11519209-e9d4-803b-87dc-d07e005d5a1f" class="bulleted-list"><li style="list-style-type:disc"><strong>Cloud Service Models</strong>: Hiểu rõ các mô hình dịch vụ đám mây như SaaS (Software as a Service), PaaS (Platform as a Service), IaaS (Infrastructure as a Service).</li></ul><ul id="11519209-e9d4-80b4-9ab8-eee6fa56a50a" class="bulleted-list"><li style="list-style-type:disc"><strong>Cloud Deployment Models</strong>: Các mô hình triển khai đám mây như Public, Private, Hybrid, và Community Cloud.</li></ul><ul id="11519209-e9d4-80b5-8390-c7235bd47e57" class="bulleted-list"><li style="list-style-type:disc"><strong>Cloud Architecture</strong>: Cấu trúc kiến trúc đám mây, phân chia trách nhiệm giữa nhà cung cấp dịch vụ đám mây (CSP) và người dùng.</li></ul><h3 id="11519209-e9d4-8022-8f1c-e0fe6ea3a949" class=""><strong>2. Cloud Data Security (Bảo mật dữ liệu trên đám mây)</strong></h3><ul id="11519209-e9d4-809a-b96c-c45599e97a9c" class="bulleted-list"><li style="list-style-type:disc"><strong>Data Lifecycle</strong>: Hiểu các giai đoạn của vòng đời dữ liệu (Data Creation, Storage, Use, Sharing, Archival, and Destruction).</li></ul><ul id="11519209-e9d4-80f7-920a-c11ce137c6d6" class="bulleted-list"><li style="list-style-type:disc"><strong>Data Security Strategies</strong>: Áp dụng các chiến lược bảo mật dữ liệu, bao gồm mã hóa (encryption), mã hóa dữ liệu động (data masking), và tokenization.</li></ul><ul id="11519209-e9d4-8081-a97a-f8d02b01c327" class="bulleted-list"><li style="list-style-type:disc"><strong>Cloud Data Storage</strong>: Bảo mật cho các cơ sở lưu trữ đám mây, kiểm tra và giám sát dữ liệu được lưu trữ.</li></ul><h3 id="11519209-e9d4-8066-b119-fc1973d89094" class=""><strong>3. Cloud Platform and Infrastructure Security (Bảo mật hạ tầng và nền tảng đám mây)</strong></h3><ul id="11519209-e9d4-8096-8dab-e03896a7d285" class="bulleted-list"><li style="list-style-type:disc"><strong>Infrastructure Components</strong>: Hiểu các thành phần hạ tầng như máy ảo (virtual machines), containers, hypervisors, và bảo mật của chúng.</li></ul><ul id="11519209-e9d4-80bb-a8dc-ddcc3bc58a94" class="bulleted-list"><li style="list-style-type:disc"><strong>Security Controls</strong>: Áp dụng các biện pháp kiểm soát bảo mật như IDS/IPS, firewalls, và quản lý bản vá (patch management).</li></ul><ul id="11519209-e9d4-80e9-b708-f4b7daff2a00" class="bulleted-list"><li style="list-style-type:disc"><strong>Business Continuity (BC) &amp; Disaster Recovery (DR)</strong>: Lập kế hoạch liên tục kinh doanh và phục hồi sau thảm họa cho môi trường đám mây.</li></ul><h3 id="11519209-e9d4-802b-a689-c245ec991e3b" class=""><strong>4. Cloud Application Security (Bảo mật ứng dụng trên đám mây)</strong></h3><ul id="11519209-e9d4-8071-a777-ce85620a92b0" class="bulleted-list"><li style="list-style-type:disc"><strong>Secure Software Development Lifecycle (SDLC)</strong>: Tích hợp bảo mật vào quy trình phát triển phần mềm cho các ứng dụng chạy trên đám mây.</li></ul><ul id="11519209-e9d4-8004-96d5-dbbc3704a2b4" class="bulleted-list"><li style="list-style-type:disc"><strong>Application Security Testing</strong>: Phương pháp kiểm thử bảo mật ứng dụng, bao gồm DAST (Dynamic Application Security Testing) và SAST (Static Application Security Testing).</li></ul><ul id="11519209-e9d4-80a0-83c0-dce9c98c79bf" class="bulleted-list"><li style="list-style-type:disc"><strong>API Security</strong>: Bảo mật giao diện lập trình ứng dụng (API), phương thức xác thực và ủy quyền.</li></ul><h3 id="11519209-e9d4-80a0-a88a-f797dbdef73f" class=""><strong>5. Cloud Security Operations (Vận hành bảo mật đám mây)</strong></h3><ul id="11519209-e9d4-80d3-a574-cbef5338c622" class="bulleted-list"><li style="list-style-type:disc"><strong>Cloud Management</strong>: Quản lý và giám sát các tài nguyên đám mây, bao gồm việc xử lý sự cố bảo mật.</li></ul><ul id="11519209-e9d4-80e7-b036-d2c60316eb8c" class="bulleted-list"><li style="list-style-type:disc"><strong>Incident Response</strong>: Quản lý sự cố bảo mật, từ việc phát hiện đến phục hồi.</li></ul><ul id="11519209-e9d4-80fc-bb74-d94f7754db77" class="bulleted-list"><li style="list-style-type:disc"><strong>Log &amp; Monitoring</strong>: Theo dõi và ghi nhận các hoạt động trên đám mây để phát hiện các hành vi đáng ngờ.</li></ul><h3 id="11519209-e9d4-8089-8317-e5417e2a2399" class=""><strong>6. Legal, Risk and Compliance (Pháp lý, Rủi ro và Tuân thủ)</strong></h3><ul id="11519209-e9d4-80d4-b477-cf6c45be9cdf" class="bulleted-list"><li style="list-style-type:disc"><strong>Compliance</strong>: Tuân thủ các quy định và tiêu chuẩn bảo mật cho đám mây như GDPR, HIPAA, ISO/IEC 27001.</li></ul><ul id="11519209-e9d4-801a-b602-dc9c7b30d9d5" class="bulleted-list"><li style="list-style-type:disc"><strong>Risk Management</strong>: Đánh giá rủi ro liên quan đến bảo mật đám mây, bao gồm việc định lượng và giảm thiểu rủi ro.</li></ul><ul id="11519209-e9d4-80e9-adbc-c7d89d216644" class="bulleted-list"><li style="list-style-type:disc"><strong>Legal Issues</strong>: Hiểu các vấn đề pháp lý liên quan đến dữ liệu và quyền riêng tư trên đám mây.</li></ul><hr id="11519209-e9d4-8058-940f-f5e0e35abf74"><h3 id="11519209-e9d4-80d1-8563-e5cfadfe63fd" class=""><strong>Systems Security Certified Practitioner (SSCP)</strong></h3><p id="11519209-e9d4-800a-95ad-d9417af1e039" class=""><strong>SSCP</strong> là chứng chỉ bảo mật hệ thống dành cho những người có trách nhiệm quản lý và triển khai các biện pháp bảo mật hệ thống, mạng và dữ liệu. Đây là một chứng chỉ ở mức độ nền tảng, tập trung vào việc thực hành bảo mật trong hệ thống thông tin.</p><h3 id="11519209-e9d4-8079-9e2c-f43e854b4702" class=""><strong>1. Access Controls (Kiểm soát truy cập)</strong></h3><ul id="11519209-e9d4-8018-84d3-e1a6344e440e" class="bulleted-list"><li style="list-style-type:disc"><strong>Authentication &amp; Authorization</strong>: Phương pháp xác thực và phân quyền cho người dùng, bao gồm các cơ chế như Multi-Factor Authentication (MFA), SSO (Single Sign-On).</li></ul><ul id="11519209-e9d4-80d7-9eab-f7590659ffc4" class="bulleted-list"><li style="list-style-type:disc"><strong>Access Control Models</strong>: Các mô hình kiểm soát truy cập như DAC (Discretionary Access Control), MAC (Mandatory Access Control), RBAC (Role-Based Access Control).</li></ul><ul id="11519209-e9d4-8024-b901-c74bd763f408" class="bulleted-list"><li style="list-style-type:disc"><strong>Identity Management</strong>: Quản lý danh tính và quyền truy cập, bao gồm quản lý vòng đời người dùng.</li></ul><h3 id="11519209-e9d4-8030-b8a7-dab704b1ea3e" class=""><strong>2. Security Operations and Administration (Vận hành và quản lý bảo mật)</strong></h3><ul id="11519209-e9d4-8053-a3f8-d906542c708d" class="bulleted-list"><li style="list-style-type:disc"><strong>Security Policies</strong>: Tạo và triển khai các chính sách bảo mật cho tổ chức.</li></ul><ul id="11519209-e9d4-8064-b110-ca5aa6574b7f" class="bulleted-list"><li style="list-style-type:disc"><strong>Asset Management</strong>: Theo dõi và bảo vệ các tài sản CNTT (phần cứng, phần mềm, dữ liệu).</li></ul><ul id="11519209-e9d4-80fd-aea2-d01394b96c8d" class="bulleted-list"><li style="list-style-type:disc"><strong>Change Management</strong>: Quản lý sự thay đổi trong hệ thống bảo mật để đảm bảo rằng các biện pháp kiểm soát bảo mật không bị vi phạm.</li></ul><h3 id="11519209-e9d4-80af-8f27-cf5d168c702c" class=""><strong>3. Risk Identification, Monitoring and Analysis (Nhận diện, Giám sát và Phân tích rủi ro)</strong></h3><ul id="11519209-e9d4-8085-baef-d83ecd406e19" class="bulleted-list"><li style="list-style-type:disc"><strong>Risk Assessment</strong>: Đánh giá rủi ro bảo mật dựa trên xác suất xảy ra và tác động tiềm tàng.</li></ul><ul id="11519209-e9d4-80e2-8067-c0f3e8e4b011" class="bulleted-list"><li style="list-style-type:disc"><strong>Security Monitoring</strong>: Sử dụng các công cụ và kỹ thuật giám sát an ninh mạng để phát hiện các mối đe dọa.</li></ul><ul id="11519209-e9d4-805b-96a0-cb9e0b388c22" class="bulleted-list"><li style="list-style-type:disc"><strong>Incident Response</strong>: Xử lý sự cố bảo mật, bao gồm phân tích, báo cáo và phục hồi.</li></ul><h3 id="11519209-e9d4-8041-aa34-e013c76438cf" class=""><strong>4. Cryptography (Mã hóa)</strong></h3><ul id="11519209-e9d4-80d8-a959-c018cf7025d7" class="bulleted-list"><li style="list-style-type:disc"><strong>Encryption Algorithms</strong>: Hiểu và áp dụng các thuật toán mã hóa phổ biến như AES, RSA, và các kỹ thuật mã hóa khóa đối xứng và bất đối xứng.</li></ul><ul id="11519209-e9d4-80cf-ad73-fca36890c1ed" class="bulleted-list"><li style="list-style-type:disc"><strong>Public Key Infrastructure (PKI)</strong>: Sử dụng hệ thống PKI để quản lý các khóa mã hóa và chứng chỉ số.</li></ul><ul id="11519209-e9d4-80a8-bf43-c56f6f1e8af1" class="bulleted-list"><li style="list-style-type:disc"><strong>Hashing</strong>: Sử dụng các thuật toán băm (MD5, SHA-256) để bảo vệ tính toàn vẹn của dữ liệu.</li></ul><h3 id="11519209-e9d4-80a3-8dfd-c3e6b39db996" class=""><strong>5. Network and Communications Security (Bảo mật mạng và truyền thông)</strong></h3><ul id="11519209-e9d4-80c2-afa8-fbe81061ab30" class="bulleted-list"><li style="list-style-type:disc"><strong>Network Protocols</strong>: Hiểu các giao thức mạng và các biện pháp bảo mật, bao gồm TCP/IP, DNS, HTTPS, và VPN.</li></ul><ul id="11519209-e9d4-8064-b789-f00826c8d37d" class="bulleted-list"><li style="list-style-type:disc"><strong>Firewalls, IDS/IPS</strong>: Sử dụng các công cụ bảo mật mạng như firewall, hệ thống phát hiện và ngăn chặn xâm nhập (IDS/IPS).</li></ul><ul id="11519209-e9d4-80fb-8b03-f62ed635535f" class="bulleted-list"><li style="list-style-type:disc"><strong>Secure Communication</strong>: Bảo vệ các giao tiếp trên mạng bằng các phương pháp mã hóa và các giao thức an toàn như SSL/TLS.</li></ul><h3 id="11519209-e9d4-8079-8d6b-f85feaee1898" class=""><strong>6. Systems and Application Security (Bảo mật hệ thống và ứng dụng)</strong></h3><ul id="11519209-e9d4-80b9-a47c-ffe10f74ef1e" class="bulleted-list"><li style="list-style-type:disc"><strong>System Hardening</strong>: Tăng cường bảo mật hệ thống bằng cách loại bỏ các lỗ hổng không cần thiết, như tắt các dịch vụ không cần thiết, cập nhật bản vá.</li></ul><ul id="11519209-e9d4-8084-b3b9-d971930604d4" class="bulleted-list"><li style="list-style-type:disc"><strong>Vulnerability Management</strong>: Phát hiện và xử lý các lỗ hổng bảo mật trên hệ thống và ứng dụng.</li></ul><ul id="11519209-e9d4-803c-a71e-ebefe8de9625" class="bulleted-list"><li style="list-style-type:disc"><strong>Secure Software Development</strong>: Áp dụng các biện pháp bảo mật trong suốt quá trình phát triển phần mềm.</li></ul><h3 id="11519209-e9d4-80b8-ace2-d113b7dd0cf5" class=""><strong>7. Incident Response and Recovery (Phản ứng và phục hồi sau sự cố)</strong></h3><ul id="11519209-e9d4-8025-aab4-e10925f90ad7" class="bulleted-list"><li style="list-style-type:disc"><strong>Incident Handling</strong>: Quản lý và phản hồi kịp thời khi phát hiện sự cố an ninh.</li></ul><ul id="11519209-e9d4-80df-914a-cea43ab58aa1" class="bulleted-list"><li style="list-style-type:disc"><strong>Disaster Recovery Planning (DRP)</strong>: Lập kế hoạch và triển khai các phương án phục hồi sau thảm họa.</li></ul><ul id="11519209-e9d4-80df-885a-e921d2f66ebd" class="bulleted-list"><li style="list-style-type:disc"><strong>Backup &amp; Restore</strong>: Thực hiện và quản lý việc sao lưu và phục hồi dữ liệu.</li></ul><hr id="11519209-e9d4-807e-a00a-d907cebfcf6f"><h3 id="11519209-e9d4-80c1-a9cd-d6237b14e571" class=""><strong>So sánh CCSP và SSCP</strong></h3><ul id="11519209-e9d4-805a-9579-fc3e684fba50" class="bulleted-list"><li style="list-style-type:disc"><strong>CCSP</strong>: Chứng chỉ cao cấp hơn, tập trung vào bảo mật cho các môi trường đám mây. Được khuyến nghị cho các chuyên gia có kinh nghiệm về quản lý bảo mật cho hạ tầng đám mây và dữ liệu.</li></ul><ul id="11519209-e9d4-804f-80a4-d342981b6c43" class="bulleted-list"><li style="list-style-type:disc"><strong>SSCP</strong>: Chứng chỉ nền tảng hơn, tập trung vào quản lý bảo mật hệ thống và mạng. Thích hợp cho các chuyên gia bảo mật CNTT ở mức độ thực hành và triển khai các giải pháp bảo mật hàng ngày.</li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
